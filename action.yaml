@@ -1,0 +1,40 @@
+name: 'Mobile App Release'
+description: 'Releases mobile apps to Apple App Store and Google Play Store'
+
+inputs:
+  expo-username:
+    description: 'The username for the expo account being released from'
+    required: true
+  expo-password:
+    description: 'The password for the expo account being released from'
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        submodules: true
+    - name: Node
+      uses: actions/setup-node@v2
+      with:
+        node-version: 16.x
+        cache: 'yarn'
+    - name: Install
+      run: yarn install
+      shell: bash
+    - name: Expo login
+      uses: expo/expo-github-action@v6
+      with:
+        expo-version: latest
+        username: ${{ secrets.EXPO_USER }}
+        password: ${{ secrets.EXPO_PASSWORD }}
+    - name: Publish
+        run: expo publish -q --release-channel stores --non-interactive
+        shell: bash
+    - name: Build and Submit
+      run: |
+        npx eas build --platform=all --auto-submit --clear-cache --non-interactive --skip-project-configuration --wait
+      shell: bash
+      timeout-minutes: 30
