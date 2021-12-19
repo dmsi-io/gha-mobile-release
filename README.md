@@ -23,7 +23,7 @@ jobs:
         with:
           expo-username: ${{ secrets.EXPO_USER }}
           expo-password: ${{ secrets.EXPO_PASSWORD }}
-          expo-app-specific-password: ${{ secrets. EXPO_APP_SPECIFIC_PASSWORD }}
+          expo-app-specific-password: ${{ secrets.EXPO_APP_SPECIFIC_PASSWORD }}
 ```
 
 ### Optional Params
