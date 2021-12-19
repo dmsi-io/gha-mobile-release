@@ -23,5 +23,18 @@ jobs:
         with:
           expo-username: ${{ secrets.EXPO_USER }}
           expo-password: ${{ secrets.EXPO_PASSWORD }}
+          expo-app-specific-password: ${{ secrets. EXPO_APP_SPECIFIC_PASSWORD }}
 ```
 
+### Optional Params
+
+#### Release Channel
+
+The channel used for OTA update releases
+
+Default: 'stores'
+
+```yaml
+  with:
+    release-channel: 'example'
+```

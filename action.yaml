@@ -11,14 +11,14 @@ inputs:
   expo-app-specific-password:
     description: 'The app-specific password used to submit a build to the Apple App Store'
     required: true
+  release-channel:
+    description: 'The channel used for OTA update releases'
+    default: 'stores'
+    required: false
 
 runs:
   using: 'composite'
   steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-      with:
-        submodules: true
     - name: Node
       id: node
       uses: actions/setup-node@v2
@@ -36,7 +36,7 @@ runs:
         username: ${{ inputs.expo-username }}
         password: ${{ inputs.expo-password }}
     - name: Publish
-        run: expo publish -q --release-channel stores --non-interactive
+        run: expo publish -q --release-channel ${{ inputs.release-channel }} --non-interactive
         shell: bash
     - name: Build and Submit
       run: |
