@@ -8,6 +8,9 @@ inputs:
   expo-password:
     description: 'The password for the expo account being released from'
     required: true
+  expo-app-specific-password:
+    description: 'The app-specific password used to submit a build to the Apple App Store'
+    required: true
 
 runs:
   using: 'composite'
@@ -30,8 +33,8 @@ runs:
       uses: expo/expo-github-action@v6
       with:
         expo-version: latest
-        username: ${{ secrets.EXPO_USER }}
-        password: ${{ secrets.EXPO_PASSWORD }}
+        username: ${{ inputs.expo-username }}
+        password: ${{ inputs.expo-password }}
     - name: Publish
         run: expo publish -q --release-channel stores --non-interactive
         shell: bash
@@ -40,3 +43,5 @@ runs:
         npx eas build --platform=all --auto-submit --clear-cache --non-interactive --skip-project-configuration --wait
       shell: bash
       timeout-minutes: 30
+      env:
+        EXPO_APPLE_APP_SPECIFIC_PASSWORD: ${{ inputs.expo-app-specific-password }}
