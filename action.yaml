@@ -1,0 +1,37 @@
+name: 'Mobile App Release'
+description: 'Releases mobile apps to Apple App Store and Google Play Store'
+
+inputs:
+  expo-username:
+    description: 'The username for the expo account being released from'
+    required: true
+  expo-password:
+    description: 'The password for the expo account being released from'
+    required: true
+  expo-app-specific-password:
+    description: 'The app-specific password used to submit a build to the Apple App Store'
+    required: true
+  release-channel:
+    description: 'The channel used for OTA update releases'
+    default: 'stores'
+    required: false
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Login to Expo
+      uses: expo/expo-github-action@v6
+      with:
+        expo-version: latest
+        username: ${{ inputs.expo-username }}
+        password: ${{ inputs.expo-password }}
+    - name: Publish
+        run: expo publish -q --release-channel ${{ inputs.release-channel }} --non-interactive
+        shell: bash
+    - name: Build and Submit
+      run: |
+        npx eas build --platform=all --auto-submit --clear-cache --non-interactive --skip-project-configuration --wait
+      shell: bash
+      timeout-minutes: 30
+      env:
+        EXPO_APPLE_APP_SPECIFIC_PASSWORD: ${{ inputs.expo-app-specific-password }}
