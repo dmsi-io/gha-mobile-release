@@ -22,16 +22,16 @@ runs:
     - name: Login to Expo
       uses: expo/expo-github-action@v6
       with:
+        eas-version: latest
         expo-version: latest
         username: ${{ inputs.expo-username }}
         password: ${{ inputs.expo-password }}
     - name: Publish
-        run: expo publish -q --release-channel ${{ inputs.release-channel }} --non-interactive
-        shell: bash
+      run: expo publish -q --release-channel ${{ inputs.release-channel }} --non-interactive
+      shell: bash
     - name: Build and Submit
       run: |
         npx eas build --platform=all --auto-submit --clear-cache --non-interactive --skip-project-configuration --wait
       shell: bash
-      timeout-minutes: 30
       env:
         EXPO_APPLE_APP_SPECIFIC_PASSWORD: ${{ inputs.expo-app-specific-password }}
