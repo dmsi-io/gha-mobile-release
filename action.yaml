@@ -35,3 +35,4 @@ runs:
       shell: bash
       env:
         EXPO_APPLE_APP_SPECIFIC_PASSWORD: ${{ inputs.expo-app-specific-password }}
+    - uses: dmsi-io/gha-back-merge@develop
