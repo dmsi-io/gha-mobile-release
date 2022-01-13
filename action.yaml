@@ -15,6 +15,12 @@ inputs:
     description: 'The channel used for OTA update releases'
     default: 'stores'
     required: false
+  commit-author-email:
+    description: 'The email address of the commit author'
+    required: false
+  commit-author-name:
+    description: 'The name of the commit author'
+    required: false
 
 runs:
   using: 'composite'
@@ -35,3 +41,7 @@ runs:
       shell: bash
       env:
         EXPO_APPLE_APP_SPECIFIC_PASSWORD: ${{ inputs.expo-app-specific-password }}
+    - uses: dmsi-io/gha-back-merge@main
+      with:
+        commit-author-email: ${{ inputs.commit-author-email }}
+        commit-author-name: ${{ inputs.commit-author-name }}
