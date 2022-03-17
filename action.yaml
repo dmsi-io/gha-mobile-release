@@ -38,7 +38,7 @@ runs:
     - name: Publish
       run: expo publish -q --release-channel ${{ inputs.release-channel }} --non-interactive
       shell: bash
-    - name: Build and Submit
+    - name: Build
       run: |
         eas build --platform=all --auto-submit --clear-cache --non-interactive --skip-project-configuration --wait
       shell: bash
@@ -49,3 +49,6 @@ runs:
         commit-author-email: ${{ inputs.commit-author-email }}
         commit-author-name: ${{ inputs.commit-author-name }}
         token: ${{ inputs.token }}
+    - name: Submit
+      run: eas submit --platform=all --latest --non-interactive --wait --verbose
+      shell: bash
