@@ -17,12 +17,15 @@ inputs:
     required: false
   commit-author-email:
     description: 'The email address of the commit author'
+    default: ''
     required: false
   commit-author-name:
     description: 'The name of the commit author'
+    default: ''
     required: false
   token:
     description: 'The token to access private repos'
+    default: ''
     required: false
 
 runs:
@@ -40,11 +43,12 @@ runs:
       shell: bash
     - name: Build
       run: |
-        eas build --platform=all --clear-cache --non-interactive --skip-project-configuration --wait
+        eas build --platform=all --clear-cache --non-interactive --wait
       shell: bash
       env:
         EXPO_APPLE_APP_SPECIFIC_PASSWORD: ${{ inputs.expo-app-specific-password }}
     - uses: dmsi-io/gha-back-merge@main
+      if: inputs.token != ''
       with:
         commit-author-email: ${{ inputs.commit-author-email }}
         commit-author-name: ${{ inputs.commit-author-name }}
