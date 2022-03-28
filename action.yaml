@@ -40,7 +40,7 @@ runs:
       shell: bash
     - name: Build
       run: |
-        eas build --platform=all --auto-submit --clear-cache --non-interactive --skip-project-configuration --wait
+        eas build --platform=all --clear-cache --non-interactive --skip-project-configuration --wait
       shell: bash
       env:
         EXPO_APPLE_APP_SPECIFIC_PASSWORD: ${{ inputs.expo-app-specific-password }}
