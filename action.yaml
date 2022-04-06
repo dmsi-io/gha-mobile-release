@@ -1,35 +1,35 @@
-name: 'Mobile App Release'
-description: 'Releases mobile apps to Apple App Store and Google Play Store'
+name: "Mobile App Release"
+description: "Releases mobile apps to Apple App Store and Google Play Store"
 
 inputs:
   expo-username:
-    description: 'The username for the expo account being released from'
+    description: "The username for the expo account being released from"
     required: true
   expo-password:
-    description: 'The password for the expo account being released from'
+    description: "The password for the expo account being released from"
     required: true
   expo-app-specific-password:
-    description: 'The app-specific password used to submit a build to the Apple App Store'
+    description: "The app-specific password used to submit a build to the Apple App Store"
     required: true
   release-channel:
-    description: 'The channel used for OTA update releases'
-    default: 'stores'
+    description: "The channel used for OTA update releases"
+    default: "stores"
     required: false
   commit-author-email:
-    description: 'The email address of the commit author'
-    default: ''
+    description: "The email address of the commit author"
+    default: ""
     required: false
   commit-author-name:
-    description: 'The name of the commit author'
-    default: ''
+    description: "The name of the commit author"
+    default: ""
     required: false
   token:
-    description: 'The token to access private repos'
-    default: ''
+    description: "The token to access private repos"
+    default: ""
     required: false
 
 runs:
-  using: 'composite'
+  using: "composite"
   steps:
     - name: Login to Expo
       uses: expo/expo-github-action@v6
@@ -38,13 +38,18 @@ runs:
         expo-version: latest
         username: ${{ inputs.expo-username }}
         password: ${{ inputs.expo-password }}
+        timeout-minutes: 5
     - name: Publish
       run: expo publish -q --release-channel ${{ inputs.release-channel }} --non-interactive
       shell: bash
+      with:
+        timeout-minutes: 15
     - name: Build
       run: |
         eas build --platform=all --clear-cache --non-interactive --wait
       shell: bash
+      with:
+        timeout-minutes: 45
       env:
         EXPO_APPLE_APP_SPECIFIC_PASSWORD: ${{ inputs.expo-app-specific-password }}
     - uses: dmsi-io/gha-back-merge@main
@@ -53,6 +58,9 @@ runs:
         commit-author-email: ${{ inputs.commit-author-email }}
         commit-author-name: ${{ inputs.commit-author-name }}
         token: ${{ inputs.token }}
+        timeout-minutes: 10
     - name: Submit
       run: eas submit --platform=all --latest --non-interactive --wait --verbose
       shell: bash
+      with:
+        timeout-minutes: 15
