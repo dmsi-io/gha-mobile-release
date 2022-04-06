@@ -38,13 +38,18 @@ runs:
         expo-version: latest
         username: ${{ inputs.expo-username }}
         password: ${{ inputs.expo-password }}
+        timeout-minutes: 5
     - name: Publish
       run: expo publish -q --release-channel ${{ inputs.release-channel }} --non-interactive
       shell: bash
+      with:
+        timeout-minutes: 15
     - name: Build
       run: |
         eas build --platform=all --clear-cache --non-interactive --wait
       shell: bash
+      with:
+        timeout-minutes: 45
       env:
         EXPO_APPLE_APP_SPECIFIC_PASSWORD: ${{ inputs.expo-app-specific-password }}
     - uses: dmsi-io/gha-back-merge@main
@@ -53,6 +58,9 @@ runs:
         commit-author-email: ${{ inputs.commit-author-email }}
         commit-author-name: ${{ inputs.commit-author-name }}
         token: ${{ inputs.token }}
+        timeout-minutes: 10
     - name: Submit
       run: eas submit --platform=all --latest --non-interactive --wait --verbose
       shell: bash
+      with:
+        timeout-minutes: 15
