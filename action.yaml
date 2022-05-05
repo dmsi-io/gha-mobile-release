@@ -21,6 +21,10 @@ inputs:
   commit-author-name:
     description: 'The name of the commit author'
     required: false
+  submodules:
+    description: 'Whether to checkout submodules'
+    default: 'true'
+    required: false
   token:
     description: 'The token to access private repos'
     required: false
@@ -48,4 +52,5 @@ runs:
       with:
         commit-author-email: ${{ inputs.commit-author-email }}
         commit-author-name: ${{ inputs.commit-author-name }}
+        submodule: ${{ inputs.submodule }}
         token: ${{ inputs.token }}
