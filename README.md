@@ -6,7 +6,7 @@ App Store and the Google Play Store.
 ## Inputs
 
 | NAME                         | DESCRIPTION                                                             | TYPE      | REQUIRED | DEFAULT  |
-| ---------------------------- | ----------------------------------------------------------------------- | --------- | -------- | -------- |
+|:-----------------------------|:------------------------------------------------------------------------|:----------|:---------|:---------|
 | `expo-username`              | The username for the expo account being released from                   | `string`  | `true`   |          |
 | `expo-password`              | The password for the expo account being released from                   | `string`  | `true`   |          |
 | `expo-app-specific-password` | The app-specific password used to submit a build to the Apple App Store | `string`  | `true`   |          |
