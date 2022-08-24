@@ -47,7 +47,7 @@ runs:
       shell: bash
     - name: Build
       run: |
-        eas build --platform=all --clear-cache --non-interactive --wait
+        eas build --platform=all --clear-cache --non-interactive --auto-submit
       shell: bash
       env:
         EXPO_APPLE_APP_SPECIFIC_PASSWORD: ${{ inputs.expo-app-specific-password }}
@@ -58,6 +58,3 @@ runs:
         commit-author-name: ${{ inputs.commit-author-name }}
         submodule: ${{ inputs.submodule }}
         token: ${{ inputs.token }}
-    - name: Submit
-      run: eas submit --platform=all --latest --non-interactive --wait --verbose
-      shell: bash
