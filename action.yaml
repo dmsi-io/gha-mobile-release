@@ -24,6 +24,14 @@ inputs:
     description: 'The token to access private repos'
     default: ''
     required: false
+  platform:
+    description: 'Which platform to build for (all|android|ios)'
+    required: false
+    default: 'all'
+  profile:
+    description: 'What profile from `eas.json` to use'
+    required: false
+    default: 'production'
   release-message:
     description: 'Message to use in the EAS Update'
     default: 'Release'
@@ -49,7 +57,7 @@ runs:
 
     - name: Build
       run: |
-        eas build --platform=all --clear-cache --non-interactive --auto-submit
+        eas build --platform="${{ inputs.platform }}" --clear-cache --non-interactive --auto-submit --profile="${{ inputs.profile }}"
       shell: bash
       env:
         EXPO_APPLE_APP_SPECIFIC_PASSWORD: ${{ inputs.expo-app-specific-password }}
