@@ -57,7 +57,7 @@ runs:
 
     - name: Build
       run: |
-        eas build --platform="${{ inputs.platform }}" --clear-cache --non-interactive --auto-submit --profile="${{ inputs.profile }}"
+        eas build --platform="${{ inputs.platform }}" --clear-cache --non-interactive --no-wait --auto-submit --profile="${{ inputs.profile }}"
       shell: bash
       env:
         EXPO_APPLE_APP_SPECIFIC_PASSWORD: ${{ inputs.expo-app-specific-password }}
