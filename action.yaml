@@ -2,18 +2,9 @@ name: 'Mobile App Release'
 description: 'Releases mobile apps to Apple App Store and Google Play Store'
 
 inputs:
-  expo-username:
-    description: 'The username for the expo account being released from'
-    required: true
-  expo-password:
-    description: 'The password for the expo account being released from'
-    required: true
-  expo-app-specific-password:
-    description: 'The app-specific password used to submit a build to the Apple App Store'
-    required: true
-  release-channel:
-    description: 'The channel used for OTA update releases'
-    default: 'stores'
+  branch:
+    description: 'The Expo branch used for OTA update releases'
+    default: 'production'
     required: false
   commit-author-email:
     description: 'The email address of the commit author'
@@ -23,13 +14,23 @@ inputs:
     description: 'The name of the commit author'
     default: ''
     required: false
+  expo-token:
+    description: 'The token for the expo account being released from'
+    required: true
+  expo-app-specific-password:
+    description: 'The app-specific password used to submit a build to the Apple App Store'
+    required: true
+  git-token:
+    description: 'The token to access private repos'
+    default: ''
+    required: false
+  release-message:
+    description: 'Message to use in the EAS Update'
+    default: 'Release'
+    required: false
   submodules:
     description: 'Whether to checkout submodules'
     default: 'true'
-    required: false
-  token:
-    description: 'The token to access private repos'
-    default: ''
     required: false
 
 runs:
@@ -40,21 +41,23 @@ runs:
       with:
         eas-version: latest
         expo-version: latest
-        username: ${{ inputs.expo-username }}
-        password: ${{ inputs.expo-password }}
+        token: ${{ inputs.expo-token }}
+
     - name: Publish
-      run: expo publish -q --release-channel ${{ inputs.release-channel }} --non-interactive
+      run: eas update --branch="${{ inputs.release-channel }}" --non-interactive --message="${{ inputs.release-message }}"
       shell: bash
+
     - name: Build
       run: |
         eas build --platform=all --clear-cache --non-interactive --auto-submit
       shell: bash
       env:
         EXPO_APPLE_APP_SPECIFIC_PASSWORD: ${{ inputs.expo-app-specific-password }}
+
     - uses: dmsi-io/gha-back-merge@main
-      if: inputs.token != ''
+      if: inputs.git-token != ''
       with:
         commit-author-email: ${{ inputs.commit-author-email }}
         commit-author-name: ${{ inputs.commit-author-name }}
         submodule: ${{ inputs.submodule }}
-        token: ${{ inputs.token }}
+        token: ${{ inputs.git-token }}
