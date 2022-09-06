@@ -24,6 +24,10 @@ inputs:
     description: 'The token to access private repos'
     default: ''
     required: false
+  increment-build-number:
+    description: 'true if the script should automatically increment the build number in an `app.config.[jt]s`'
+    default: 'true'
+    required: false
   platform:
     description: 'Which platform to build for (all|android|ios)'
     required: false
@@ -50,6 +54,16 @@ runs:
         eas-version: latest
         expo-version: latest
         token: ${{ inputs.expo-token }}
+
+    - name: Increment Build Number
+      if: ${{ inputs.increment-build-number != 'false' }}
+      shell: shell
+      run: |
+        if [ -f "app.config.ts" ]; then
+          python ./auto-increment.py app.config.ts
+        elif [ -f "app.config.js" ]; then
+          python ./auto-increment.py app.config.js
+        fi
 
     - name: Publish
       run: eas update --branch="${{ inputs.release-channel }}" --non-interactive --message="${{ inputs.release-message }}"
