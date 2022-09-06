@@ -9,7 +9,7 @@ with open(sys.argv[1], 'r') as f:
     f.close()
 
 
-    def adjust_build_number(line):
+    def increment_build_number(line):
         import re
         result = re.search(r"(.*)(\d+)(.*)", line, re.DOTALL)
         new_build_number = int(result.group(2)) + 1
@@ -18,7 +18,8 @@ with open(sys.argv[1], 'r') as f:
 
 
     newContents = [
-        adjust_build_number(x) if 'buildNumber' in x else x for x in contents
+        # Increment build number if 'buildNumber' is in the text of the line
+        (increment_build_number(x) if 'buildNumber' in line else line) for line in contents
     ]
     with open(sys.argv[1], 'w') as wFile:
         wFile.writelines(newContents)
