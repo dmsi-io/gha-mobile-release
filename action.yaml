@@ -55,6 +55,12 @@ runs:
         expo-version: latest
         token: ${{ inputs.expo-token }}
 
+    - name: Setup Python
+      uses: actions/setup-python@v2
+      if: ${{ inputs.increment-build-number != 'false' }}
+      with:
+        python-version: 3.8
+
     - name: Increment Build Number
       if: ${{ inputs.increment-build-number != 'false' }}
       shell: shell
