@@ -57,7 +57,7 @@ runs:
 
     - name: Increment Build Number
       if: ${{ inputs.increment-build-number != 'false' }}
-      shell: shell
+      shell: bash
       run: |
         if [ -f "app.config.ts" ]; then
           if hash python3 2>/dev/null; then
