@@ -19,7 +19,7 @@ with open(sys.argv[1], 'r') as f:
 
     newContents = [
         # Increment build number if 'buildNumber' is in the text of the line
-        (increment_build_number(x) if 'buildNumber' in line else line) for line in contents
+        (increment_build_number(line) if 'buildNumber' in line else line) for line in contents
     ]
     with open(sys.argv[1], 'w') as wFile:
         wFile.writelines(newContents)
