@@ -55,21 +55,20 @@ runs:
         expo-version: latest
         token: ${{ inputs.expo-token }}
 
-    - name: Setup Python
-      uses: actions/setup-python@v2
-      if: ${{ inputs.increment-build-number != 'false' }}
-      with:
-        python-version: 3.8
-
     - name: Increment Build Number
       if: ${{ inputs.increment-build-number != 'false' }}
       shell: shell
       run: |
         if [ -f "app.config.ts" ]; then
-          python ./auto-increment.py app.config.ts
+          python3 ./auto-increment.py app.config.ts
         elif [ -f "app.config.js" ]; then
-          python ./auto-increment.py app.config.js
+          python3 ./auto-increment.py app.config.js
         fi
+        git config user.email ${{ inputs.commit-author-email }}
+        git config user.name ${{ inputs.commit-author-name }}
+        git add *
+        git commit -m 'Increment build number'
+        git push
 
     - name: Publish
       run: eas update --branch="${{ inputs.release-channel }}" --non-interactive --message="${{ inputs.release-message }}"
