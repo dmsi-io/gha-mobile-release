@@ -62,16 +62,16 @@ runs:
         if [ -f "app.config.ts" ]; then
           if hash python3 2>/dev/null; then
             # Run `python3` if it exists
-            python3 ./auto-increment.py app.config.ts
+            python3 ${{ github.action_path }}/auto-increment.py app.config.ts
           else
             # Default to `python`
-            python ./auto-increment.py app.config.ts
+            python ${{ github.action_path }}/auto-increment.py app.config.ts
           fi
         elif [ -f "app.config.js" ]; then
           if hash python3 2>/dev/null; then
-            python3 ./auto-increment.py app.config.js
+            python3 ${{ github.action_path }}/auto-increment.py app.config.js
           else
-            python ./auto-increment.py app.config.js
+            python ${{ github.action_path }}/auto-increment.py app.config.js
           fi
         fi
         git config user.email ${{ inputs.commit-author-email }}
