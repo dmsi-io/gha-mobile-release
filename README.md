@@ -16,6 +16,7 @@ App Store and the Google Play Store.
 | `increment-build-number`     | 'true' if the script should automatically increment the build number in an `app.config.[jt]s` | `string`  | `false`  | `true`       |
 | `platform`                   | Which platform to build for (all &#124; android &#124; ios)                                   | `string`  | `false`  | `all`        |
 | `profile`                    | What profile from `eas.json` to use                                                           | `string`  | `false`  | `preview`    |
+| `release-channel`            | Channel to use in the EAS Update                                                              | `string`  | `false`  | `production` |
 | `release-message`            | Message to use in the EAS Update                                                              | `string`  | `false`  | `Release`    |
 | `submodules`                 | Whether to checkout submodules                                                                | `boolean` | `false`  | `true`       |
 

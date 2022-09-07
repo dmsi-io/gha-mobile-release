@@ -36,6 +36,10 @@ inputs:
     description: 'What profile from `eas.json` to use'
     required: false
     default: 'production'
+  release-channel:
+    description: 'Channel to use in the EAS Update'
+    default: 'production'
+    required: false
   release-message:
     description: 'Message to use in the EAS Update'
     default: 'Release'
