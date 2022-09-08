@@ -11,7 +11,7 @@ with open(sys.argv[1], 'r') as f:
 
     def increment_build_number(line):
         import re
-        result = re.search(r"(.*)(\d+)(.*)", line, re.DOTALL)
+        result = re.search(r"(.*?)(\d+)(.*)", line, re.DOTALL)
         new_build_number = int(result.group(2)) + 1
         print("Setting buildNumber to %d" % new_build_number)
         return "%s%d%s" % (result.group(1), new_build_number, result.group(3))
