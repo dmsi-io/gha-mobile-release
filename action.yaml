@@ -100,5 +100,5 @@ runs:
       with:
         commit-author-email: ${{ inputs.commit-author-email }}
         commit-author-name: ${{ inputs.commit-author-name }}
-        submodule: ${{ inputs.submodule }}
+        submodules: ${{ inputs.submodules }}
         token: ${{ inputs.git-token }}
