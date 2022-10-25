@@ -53,7 +53,7 @@ runs:
   using: 'composite'
   steps:
     - name: Login to Expo
-      uses: expo/expo-github-action@v6
+      uses: expo/expo-github-action@v7
       with:
         eas-version: latest
         expo-version: latest
