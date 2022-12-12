@@ -1,56 +1,56 @@
-name: "Mobile App Release"
-description: "Releases mobile apps to Apple App Store and Google Play Store"
+name: 'Mobile App Release'
+description: 'Releases mobile apps to Apple App Store and Google Play Store'
 
 inputs:
   branch:
-    description: "The Expo branch used for OTA update releases"
-    default: "production"
+    description: 'The Expo branch used for OTA update releases'
+    default: 'production'
     required: false
   commit-author-email:
-    description: "The email address of the commit author"
-    default: ""
+    description: 'The email address of the commit author'
+    default: ''
     required: false
   commit-author-name:
-    description: "The name of the commit author"
-    default: ""
+    description: 'The name of the commit author'
+    default: ''
     required: false
   expo-token:
-    description: "The token for the expo account being released from"
+    description: 'The token for the expo account being released from'
     required: true
   expo-app-specific-password:
-    description: "The app-specific password used to submit a build to the Apple App Store"
+    description: 'The app-specific password used to submit a build to the Apple App Store'
     required: true
   git-token:
-    description: "The token to access private repos"
-    default: ""
+    description: 'The token to access private repos'
+    default: ''
     required: false
   increment-build-number:
-    description: "true if the script should automatically increment the build number in an `app.config.[jt]s`"
-    default: "true"
+    description: 'true if the script should automatically increment the build number in an `app.config.[jt]s`'
+    default: 'true'
     required: false
   platform:
-    description: "Which platform to build for (all|android|ios)"
+    description: 'Which platform to build for (all|android|ios)'
     required: false
-    default: "all"
+    default: 'all'
   profile:
-    description: "What profile from `eas.json` to use"
+    description: 'What profile from `eas.json` to use'
     required: false
-    default: "production"
+    default: 'production'
   release-channel:
-    description: "Channel to use in the EAS Update"
-    default: "production"
+    description: 'Channel to use in the EAS Update'
+    default: 'production'
     required: false
   release-message:
-    description: "Message to use in the EAS Update"
-    default: "Release"
+    description: 'Message to use in the EAS Update'
+    default: 'Release'
     required: false
   submodules:
-    description: "Whether to checkout submodules"
-    default: "true"
+    description: 'Whether to checkout submodules'
+    default: 'true'
     required: false
 
 runs:
-  using: "composite"
+  using: 'composite'
   steps:
     - name: Login to Expo
       uses: expo/expo-github-action@v7
@@ -81,7 +81,7 @@ runs:
         git config user.email ${{ inputs.commit-author-email }}
         git config user.name ${{ inputs.commit-author-name }}
         git add app.config.*
-        git commit --no-verify -m 'Increment build number: ${{ github.event.commits[0].message }}' || true
+        git commit --no-verify -m 'Increment build number' || true
         git push
 
     - name: Publish
