@@ -81,7 +81,7 @@ runs:
         git config user.email ${{ inputs.commit-author-email }}
         git config user.name ${{ inputs.commit-author-name }}
         git add app.config.*
-        git commit --no-verify -m 'Increment build number' || true
+        git commit --no-verify -m 'Increment build number: ${{ github.event.commits[0].message }}' || true
         git push
 
     - name: Publish
