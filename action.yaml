@@ -96,7 +96,7 @@ runs:
         EXPO_APPLE_APP_SPECIFIC_PASSWORD: ${{ inputs.expo-app-specific-password }}
 
     - uses: dmsi-io/gha-back-merge@main
-      if: inputs.git-token != ''
+      if: inputs.git-token != '' && inputs.commit-author-email != '' && inputs.commit-author-name != ''
       with:
         commit-author-email: ${{ inputs.commit-author-email }}
         commit-author-name: ${{ inputs.commit-author-name }}
