@@ -95,6 +95,14 @@ runs:
       env:
         EXPO_APPLE_APP_SPECIFIC_PASSWORD: ${{ inputs.expo-app-specific-password }}
 
+    - name: Uninstall Husky
+      run: |
+        if hash husky 2>/dev/null; then
+          # Uninstall husky hooks if they are present to prevent issues when switching branches
+          husky uninstall
+        fi
+      shell: bash
+
     - uses: dmsi-io/gha-back-merge@main
       if: inputs.git-token != ''
       with:
